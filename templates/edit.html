@@ -1,55 +1,49 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<h1 style="width: 100%">{% block title %} {% endblock %}</h1>
+<div class="container mt-5">
+  <h1>Edit Volunteer Details:</h1>
 
-{% block content %}
-    <h1 style="width: 100%">
-        {% block title %} Edit {{ student.firstname }}
-                               {{ student.lastname }}'s Details
-        {% endblock %}
-    </h1>
-    <form method="post">
-        <p>
-            <label for="firstname">First Name</label>
-            <input type="text" name="firstname"
-                   value={{ student.firstname }}
+  <form method="post">
+    <div class="col-md-12">
+      <label for="firstname" class="form-label mt-3">First Name</label>
+      <input type="text" class="form-control" name="firstname"
+                   value={{ volunteer.firstname }}
                    placeholder="First name">
             </input>
-        </p>
+    </div>
 
-        <p>
-            <label for="lastname">Last Name</label>
-            <input type="text" name="lastname"
-                   value={{ student.lastname }}
+    <div class="col-md-12">
+      <label for="lastname" class="form-label mt-3">Last Name</label>
+      <input type="text" class="form-control" name="lastname"
+                   value={{ volunteer.lastname }}
                    placeholder="Last name">
             </input>
-        </p>
+    </div>
 
-        <p>
-            <label for="email">Email</label>
-            <input type="email" name="email"
-                   value={{ student.email }}
-                   placeholder="Student email">
+    <div class="col-md-12">
+      <label for="email" class="form-label mt-3">Email</label>
+      <input type="text" class="form-control" name="email"
+                   value={{ volunteer.email }}
+                   placeholder="Email">
             </input>
-        </p>
+    </div>
 
-        <p>
-            <label for="age">Age</label>
-            <input type="number" name="age"
-                   value={{ student.age }}
-                   placeholder="Age">
-            </input>
-        </p>
-
-        <p>
-        <label for="bio">Bio</label>
-        <br>
-        <textarea name="bio"
-                  placeholder="Bio"
-                  rows="15"
-                  cols="60"
-                  >{{ student.bio }}</textarea>
-        </p>
-        <p>
-            <button type="submit">Submit</button>
-        </p>
-    </form>
+    <p>
+      <label for="job" class="form-label mt-3">Job</label>
+      <select name="job" class="form-control" value={{ volunteer.job }}>
+        <option selected>Change Job</option>
+        <option value="Registration">Registration</option>
+        <option value="Course Marshal">Course Marshal</option>
+        <option value="Water Stop">Water Stop</option>
+        <option value="Finish Line">Finish Line</option>
+        <option value="Party Set-Up">Party Set-Up</option>
+        <option value="Clean Up">Clean Up</option>
+      </select>
+    </p>
+    <br>
+    <div class="col-md-12">
+      <button type="submit" class="btn btn-outline-primary">Submit</button>
+    </div>
+  </form>
+</div>
 {% endblock %}

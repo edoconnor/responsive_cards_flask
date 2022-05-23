@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
 
@@ -13,28 +14,28 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-class Student(db.Model):
+class Volunteer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(80), unique=True, nullable=False)
-    age = db.Column(db.Integer)
+    job = db.Column(db.Text)
     created_at = db.Column(db.DateTime(timezone=True),
                            server_default=func.now())
-    bio = db.Column(db.Text)
-
+    
     def __repr__(self):
-        return f'<Student {self.firstname}>'
+        return f'<Volunteer {self.firstname}>'
 
 @app.route('/')
 def index():
-    students = Student.query.all()
-    return render_template('index.html', students=students)    
+    date = datetime.now()
+    volunteers = Volunteer.query.all()
+    return render_template('index.html', volunteers=volunteers, date=date)    
 
-@app.route('/<int:student_id>/')
-def student(student_id):
-    student = Student.query.get_or_404(student_id)
-    return render_template('student.html', student=student)
+@app.route('/<int:volunteer_id>/')
+def volunteer(volunteer_id):
+    volunteer = Volunteer.query.get_or_404(volunteer_id)
+    return render_template('volunteer.html', volunteer=volunteer)
 
 @app.route('/create/', methods=('GET', 'POST'))
 def create():
@@ -42,47 +43,43 @@ def create():
         firstname = request.form['firstname']
         lastname = request.form['lastname']
         email = request.form['email']
-        age = int(request.form['age'])
-        bio = request.form['bio']
-        student = Student(firstname=firstname,
+        job = request.form['job']
+        volunteer = Volunteer(firstname=firstname,
                           lastname=lastname,
                           email=email,
-                          age=age,
-                          bio=bio)
-        db.session.add(student)
+                          job=job)
+        db.session.add(volunteer)
         db.session.commit()
 
         return redirect(url_for('index'))    
 
     return render_template('create.html') 
 
-@app.route('/<int:student_id>/edit/', methods=('GET', 'POST'))
-def edit(student_id):
-    student = Student.query.get_or_404(student_id)
+@app.route('/<int:volunteer_id>/edit/', methods=('GET', 'POST'))
+def edit(volunteer_id):
+    volunteer = Volunteer.query.get_or_404(volunteer_id)
 
     if request.method == 'POST':
         firstname = request.form['firstname']
         lastname = request.form['lastname']
         email = request.form['email']
-        age = int(request.form['age'])
-        bio = request.form['bio']
+        job = request.form['job']
 
-        student.firstname = firstname
-        student.lastname = lastname
-        student.email = email
-        student.age = age
-        student.bio = bio
-
-        db.session.add(student)
+        volunteer.firstname = firstname
+        volunteer.lastname = lastname
+        volunteer.email = email
+        volunteer.job = job
+     
+        db.session.add(volunteer)
         db.session.commit()
 
         return redirect(url_for('index'))
 
-    return render_template('edit.html', student=student)      
+    return render_template('edit.html', volunteer=volunteer)      
 
-@app.post('/<int:student_id>/delete/')
-def delete(student_id):
-    student = Student.query.get_or_404(student_id)
-    db.session.delete(student)
+@app.post('/<int:volunteer_id>/delete/')
+def delete(volunteer_id):
+    volunteer = Volunteer.query.get_or_404(volunteer_id)
+    db.session.delete(volunteer)
     db.session.commit()
     return redirect(url_for('index'))

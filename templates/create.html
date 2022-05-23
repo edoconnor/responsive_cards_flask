@@ -1,47 +1,40 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<h1 style="width: 100%">{% block title %} {% endblock %}</h1>
+<div class="container mt-5">
+  <h1>Sign Up to Volunteer!</h1>
 
-{% block content %}
-    <h1 style="width: 100%">{% block title %} Add a New Student {% endblock %}</h1>
-    <form method="post">
-        <p>
-            <label for="firstname">First Name</label>
-            <input type="text" name="firstname"
-                   placeholder="First name">
-            </input>
-        </p>
-
-        <p>
-            <label for="lastname">Last Name</label>
-            <input type="text" name="lastname"
-                   placeholder="Last name">
-            </input>
-        </p>
-
-        <p>
-            <label for="email">Email</label>
-            <input type="email" name="email"
-                   placeholder="Student email">
-            </input>
-        </p>
-
-        <p>
-            <label for="age">Age</label>
-            <input type="number" name="age"
-                   placeholder="Age">
-            </input>
-        </p>
-
-        <p>
-        <label for="bio">Bio</label>
-        <br>
-        <textarea name="bio"
-                  placeholder="Bio"
-                  rows="15"
-                  cols="60"
-                  ></textarea>
-        </p>
-        <p>
-            <button type="submit">Submit</button>
-        </p>
-    </form>
+  <form method="post">
+    <div class="col-md-12">
+      <label for="firstname" class="form-label mt-3">First Name</label>
+      <input type="text" class="form-control" name="firstname" required />
+    </div>
+    <div class="col-md-12">
+      <label for="lastname" class="form-label mt-3">Last Name</label>
+      <input type="text" class="form-control" name="lastname" required />
+    </div>
+    <div class="col-md-12">
+      <label for="email" class="form-label mt-3">Email Address</label>
+      <input type="text" class="form-control" name="email" required />
+    </div>
+    <br />
+    <div class="input-group mb-3">
+      <label class="input-group-text" for="inputGroupSelect01"
+        >Select Job</label
+      >
+      <select class="form-select" name="job">
+        <option selected>Choose...</option>
+        <option value="Registration">Registration</option>
+        <option value="Course Marshal">Course Marshall</option>
+        <option value="Water Stop">Water Stop</option>
+        <option value="Finish Line">Finish Line</option>
+        <option value="Party Set-Up">Party Set-Up</option>
+        <option value="Clean Up">Clean Up</option>
+      </select>
+    </div>
+    <br />
+    <div class="col-md-12">
+      <button type="submit" class="btn btn-outline-primary">Submit</button>
+    </div>
+  </form>
+</div>
 {% endblock %}
