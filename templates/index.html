@@ -3,7 +3,7 @@
 <h1 class="title my-3">{% block title %}{% endblock %}</h1>
 
 <div class="container">
-  <h3>Volunteer Roster - [{{ date.strftime('%m/%d/%Y %-I:%M:%S %p') }}]</h3>
+  <h3>Roster - [{{ date.strftime('%m/%d/%Y %-I:%M:%S %p') }}]</h3>
   <div class="row g-3">
     {% for volunteer in volunteers %}
     <div class="col-12 col-md-6 col-lg-4">
